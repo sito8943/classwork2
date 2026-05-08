@@ -34,7 +34,7 @@ const COLOR = new Color();
 const clampPixelRatio = () => Math.min(window.devicePixelRatio || 1, 2);
 
 export default class App {
-  #gl;
+  #renderer;
   #camera;
   #scene;
   #clock;
@@ -76,24 +76,24 @@ export default class App {
   #init() {
     const pixelRatio = clampPixelRatio();
 
-    this.#gl = new WebGLRenderer({
+    this.#renderer = new WebGLRenderer({
       canvas: document.querySelector('#canvas'),
       antialias: pixelRatio <= 1.5,
       powerPreference: 'high-performance',
     });
 
-    this.#gl.setPixelRatio(pixelRatio);
-    this.#gl.setSize(window.innerWidth, window.innerHeight);
-    this.#gl.outputColorSpace = SRGBColorSpace;
-    this.#gl.toneMapping = ACESFilmicToneMapping;
-    this.#gl.toneMappingExposure = 1.06;
-    this.#gl.setClearColor(0x050b14, 1);
+    this.#renderer.setPixelRatio(pixelRatio);
+    this.#renderer.setSize(window.innerWidth, window.innerHeight);
+    this.#renderer.outputColorSpace = SRGBColorSpace;
+    this.#renderer.toneMapping = ACESFilmicToneMapping;
+    this.#renderer.toneMappingExposure = 1.06;
+    this.#renderer.setClearColor(0x050b14, 1);
 
     const aspect = window.innerWidth / window.innerHeight;
     this.#camera = new PerspectiveCamera(55, aspect, 0.1, 40);
     this.#camera.position.set(0, 0.75, 5.35);
 
-    this.#controls = new OrbitControls(this.#camera, this.#gl.domElement);
+    this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
     this.#controls.enableDamping = true;
     this.#controls.dampingFactor = 0.055;
     this.#controls.enablePan = false;
@@ -319,8 +319,8 @@ export default class App {
     const w = window.innerWidth;
     const h = window.innerHeight;
 
-    this.#gl.setPixelRatio(clampPixelRatio());
-    this.#gl.setSize(w, h);
+    this.#renderer.setPixelRatio(clampPixelRatio());
+    this.#renderer.setSize(w, h);
 
     this.#camera.aspect = w / h;
     this.#camera.updateProjectionMatrix();
@@ -380,7 +380,7 @@ export default class App {
 
     this.#controls.update();
 
-    this.#gl.render(this.#scene, this.#camera);
+    this.#renderer.render(this.#scene, this.#camera);
     this.#stats.end();
 
     window.requestAnimationFrame(this.#animate);
