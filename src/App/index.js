@@ -26,8 +26,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import Stats from 'stats.js';
 
-import vertexShader from './shaders/core/vertex.js';
-import fragmentShader from './shaders/core/frag.js';
+import vertexShader from './shaders/two/vertex.js';
+import fragmentShader from './shaders/two/frag.js';
 
 const COLOR = new Color();
 

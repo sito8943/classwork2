@@ -1,4 +1,4 @@
-import './scenes/shader-bloom/style.css';
-import App from './scenes/shader-bloom/App';
+import './style.css';
+import App from './App';
 
 const app = new App();
