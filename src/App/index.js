@@ -1,16 +1,14 @@
 import {
   ACESFilmicToneMapping,
-  AmbientLight,
   BufferAttribute,
   BufferGeometry,
   Clock,
   Color,
-  DirectionalLight,
   FogExp2,
   Group,
   MathUtils,
   Mesh,
-  MeshStandardMaterial,
+  MeshBasicMaterial,
   PerspectiveCamera,
   PlaneGeometry,
   Points,
@@ -31,7 +29,7 @@ import fragmentShader from './shaders/two/frag.js';
 
 const COLOR = new Color();
 
-const clampPixelRatio = () => Math.min(window.devicePixelRatio || 1, 2);
+const clampPixelRatio = () => Math.min(window.devicePixelRatio || 1, 1.5);
 
 export default class App {
   #renderer;
@@ -78,7 +76,7 @@ export default class App {
 
     this.#renderer = new WebGLRenderer({
       canvas: document.querySelector('#canvas'),
-      antialias: pixelRatio <= 1.5,
+      antialias: pixelRatio === 1,
       powerPreference: 'high-performance',
     });
 
@@ -118,23 +116,10 @@ export default class App {
   }
 
   #initScene() {
-    const hemi = new AmbientLight(0xa8dcff, 0.36);
-    this.#scene.add(hemi);
-
-    const key = new DirectionalLight(0xffdbbf, 1.2);
-    key.position.set(3.2, 4.5, 2.5);
-    this.#scene.add(key);
-
-    const fill = new DirectionalLight(0x8fb2ff, 0.65);
-    fill.position.set(-3.5, 1.5, -4.2);
-    this.#scene.add(fill);
-
     const floor = new Mesh(
       new PlaneGeometry(22, 22),
-      new MeshStandardMaterial({
+      new MeshBasicMaterial({
         color: COLOR.clone().set(0x0b1a2b),
-        roughness: 0.88,
-        metalness: 0.04,
       }),
     );
 
